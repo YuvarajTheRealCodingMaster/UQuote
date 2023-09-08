@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UQuote | Find Quotes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin-right: 20px;
+        }
+        .nav-links a,.navbar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat';
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+        .button {
+            font-family: 'Montserrat';
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .quote {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+        }
+
+        .quote {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quote button {
+            border: none;
+            cursor: pointer;
+            appearance: none;
+            background-color: inherit;
+        }
+
+        button img {
+            width: 32px;
+            height: 32px;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(158, 158, 158, 0.595);
+        }
+
+        #loader h1 {
+            opacity: 1;
+            color: black;
+            font-size: large;
+            font-weight: 500;
+        }
+        
+
+    </style>
+</head>
+<body>
+        <div class="navbar">
+            <a href="/"><h1>UQuote</h1></a>
+            <ul class="nav-links">
+                <li><a href="/search">Search</a></li>
+                <li><a href="/show_quotes">Find</a></li>
+            </ul>
+        </div>
+        <div class="container">
+            {% for quote in quotes %}
+            <div class="quote">
+                <p class="quote-content"><b>{{ quote }}</b></p>
+                <button class="copy-button"><img src="{{ url_for('static', filename='clipboard.png') }}" alt="copy to clipboard"></button>
+            </div>
+            {% endfor %}
+        </div>
+        <form action="/refresh_quotes" method="POST">
+            <button class="button" type="submit">Refresh</button>
+        </form>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const copyButtons = document.querySelectorAll(".copy-button");
+            copyButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const quoteContent = this.parentElement.querySelector(".quote-content").textContent;
+                    const fullQuote = `${quoteContent}`;
+                    
+                    const textarea = document.createElement("textarea");
+                    textarea.value = fullQuote;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textarea);
+
+                    alert("Quote copied to clipboard!");
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

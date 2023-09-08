@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UQuote Home</title>
+    <style>
+        /* Add your CSS styling here */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Montserrat';
+            margin: 0;
+            padding: 0;
+            display: grid;
+            height: 100vh;
+            grid-template-rows: auto 1fr;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .navbar a{
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin-right: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .container {
+            width: 100vw;
+            display: flex;
+        }
+        .half {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            text-align: center;
+        }
+        .half h1 {
+            margin-bottom: 20px;
+            
+        }
+        .half button {
+            padding: 10px 20px;
+            font-size: 16px;
+            
+        }
+
+        .half button:hover {
+            cursor: pointer;
+        }
+
+        button {
+            font-family: 'Montserrat';
+        }
+
+        @media (max-width: 768px) {
+            .body {
+                overflow-x: hidden;
+            }
+            .container {
+                flex-direction: column;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                overflow-x: hidden;
+            }
+            .half {
+                width: 100vw;
+                height: 50%;
+                margin: 0;
+            }
+
+            .half p {
+                font-size: smaller;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/"><h1>UQuote</h1></a>
+        <ul class="nav-links">
+            <li><a href="/search">Search</a></li>
+            <li><a href="/show_quotes">Find</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="half" style="background-color: #f0f0f0;">
+            <h1>Search For quotes.</h1>
+            <p>Search quotes from your favorite authors and tags.</p>
+            <p>Get eyecatching quote images and text that you can copy.</p>
+            <a href="/search"><button>Search Quotes</button></a>
+        </div>
+        <div class="half" style="background-color: #d0d0d0;">
+            <h1>Find random Quotes.</h1>
+            <p>Generate random quotes, Copy them as you wish.</p>
+            <p>Get different kinds of quotes from different influential figures.</p>
+            <a href="/show_quotes"><button>Find Quotes</button></a>
+        </div>
+    </div>
+</body>
+</html>

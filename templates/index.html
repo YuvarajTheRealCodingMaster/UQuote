@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UQuote | Search Quotes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: white;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin-right: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+            overflow-y: scroll;
+            font-family: 'Montserrat';
+            background-color: #d0d0d0;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat';
+        }
+
+        form .box {
+            max-width: 500px;
+            width: 500px;
+            padding: 10px;
+            margin: 10px;
+            margin-right: 0;
+            font-family: 'Montserrat';
+        }
+
+        form .button {
+            padding: 10px;
+            margin: 10px;
+            font-family: 'Montserrat';
+            margin-left: 5px;
+        }
+
+        .container {
+        display: flex;
+        flex-wrap: wrap;
+        }
+
+        .quote-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 10px;
+        }
+
+        .quote {
+        width: 48%;
+        box-sizing: border-box;
+        }
+
+        .quote img {
+        max-width: 100%;
+        }
+
+        .qf {
+            text-align: center;
+        }
+
+        .q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .q button {
+            border: none;
+            cursor: pointer;
+            appearance: none;
+            background-color: inherit;
+        }
+
+        .quote {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        button img {
+            width: 32px;
+            height: 32px;
+        }
+
+        nq {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button img:hover {
+            color: rgb(79, 79, 79);
+        }
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+        .quote-row {
+            flex-direction: column; /* Stack quotes on top of each other */
+        }
+
+        .quote {
+            width: 100%; /* Quotes take up full width in stacked view */
+            margin-bottom: 10px; /* Add spacing between stacked quotes */
+        }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/"><h1>UQuote</h1></a>
+        <ul class="nav-links">
+            <li><a href="/search">Search</a></li>
+            <li><a href="/show_quotes">Find</a></li>
+        </ul>
+    </div>
+    <div class="qf"><p>Quotes from: <b><a href="https://quotefancy.com/" target="_blank">Quotefancy</a></b></p></div>
+    
+    <form action="" method="post" class="input-box">
+        <input type="text" name="search" id="sb" placeholder="Enter author or tag: "  class="box" onblur="getVal()">
+        <input type="submit" class="button" value="Search">
+    </form>
+    <div class="quote-row">
+        {% for img in indices %}
+        <div class="quote">
+            <img src="{{ image_urls[img] }}" alt="Image">
+            <p class="quote-content" id="myParagraph"><b>{{ quotes[img] }}</b></p>
+            <div class="q">
+                <div>
+                    <p class="quote-author">{{ authors[img] }}</p>
+                </div>
+                <div>
+                    <button class="copy-button"><img src="{{ url_for('static', filename='clipboard.png') }}" alt="copy to clipboard"></button>
+                </div>
+            </div>
+        </div>
+        {% if loop.index % 2 == 0 or loop.last %}
+    </div><div class="quote-row">
+        {% endif %}
+        {% endfor %}
+    </div>
+    <script>
+        const copyButtons = document.querySelectorAll(".copy-button");
+        
+        copyButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const quoteContent = button.closest(".quote").querySelector(".quote-content").innerText;
+                const quoteAuthor = button.closest(".quote").querySelector(".quote-author").innerText;
+                const textToCopy = `${quoteContent} - ${quoteAuthor}`;
+                
+                // Create a temporary textarea to copy the text to clipboard
+                const textarea = document.createElement("textarea");
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+
+                alert("Quote copied to clipboard");
+            });
+        });
+
+
+    </script>
+</body>
+</html>
